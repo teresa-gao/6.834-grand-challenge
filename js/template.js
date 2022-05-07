@@ -1,5 +1,25 @@
+var target_radius = 100;
+var num_comparisons = 25;
+var shots_per_target = 15;
+
+var target_coords = []
+for (let target_num = 0; target_num < num_comparisons; target_num++) {
+  let x1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+  let x2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+
+  let y1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+  let y2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+
+  target_coords.push({
+    "x1": x1,
+    "y1": y1,
+    "x2": x2,
+    "y2": y2
+  });
+}
+
 function make_slides(f) {
-  var   slides = {};
+  var slides = {};
 
   slides.i0 = slide({
      name : "i0",
@@ -22,12 +42,7 @@ function make_slides(f) {
     /* trial information for this block
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
-    present : [
-      // TODO: change to x1 y1 x2 y2, where (0, 0) is the center of the target
-      {subject: "dog", object: "ball"},
-      {subject: "cat", object: "windowsill"},
-      {subject: "bird", object: "shiny object"},
-    ],
+    present: target_coords, // defined at top of this file
 
     //this gets run only at the beginning of the block
     present_handle : function(stim) {
@@ -35,7 +50,7 @@ function make_slides(f) {
       this.stim = stim; //I like to store this information in the slide so I can record it later.
       this.startTime = Date.now();
 
-      $(".prompt").html(stim.subject + "s like " + stim.object + "s.");
+      $(".prompt").html("test: coordinates " + stim.x1 + "," + stim.x2 + "," + stim.y1 + "," + stim.y2);
       this.init_sliders();
       exp.sliderPost = null; //erase current slider value
     },
