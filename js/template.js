@@ -23,6 +23,7 @@ function make_slides(f) {
      (the variable 'stim' will change between each of these values,
       and for each of these, present_handle will be run.) */
     present : [
+      // TODO: change to x1 y1 x2 y2, where (0, 0) is the center of the target
       {subject: "dog", object: "ball"},
       {subject: "cat", object: "windowsill"},
       {subject: "bird", object: "shiny object"},

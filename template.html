@@ -1,7 +1,7 @@
 <html>
 
   <head>
-      <title>6.834 Final Project</title>
+      <title>6.834 Grand Challenge</title>
 
       <!--JS-->
 
@@ -33,23 +33,33 @@
   <body onload="init();">
     <noscript>This task requires JavaScript.</noscript>
 
+    <div class="progress">
+      <span><i>Progress:</i></span>
+      <div class="bar-wrapper">
+        <div class="bar" width="0%">
+        </div>
+      </div>
+    </div>
+
     <div class="slide" id="i0" >
-      <p id="cocolab">6.834 Final Project</p>
+      <p id="cocolab">6.834 Grand Challenge</p>
       <button id="start_button" type="button">Start Experiment</button>
       <p id="legal">Legal information: By answering the following questions, you are participating in a study being performed by Teresa Gao and Brandon Koo as part of the MIT 6.834 Cognitive Robotics class. If you have questions about this research, please contact Teresa Gao at <a href="mailto://t_gao@mit.edu">t_gao@mit.edu</a>. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.</p>
     </div>
 
     <div class="slide" id="instructions">
       <h3>Instructions</h3>
-      <p>Here are some instructions.</p>
+      <p>Imagine that you are trying to find the best robot archer.</p>
+      <p>You will be presented with two targets, after two different robot archers have shot at them. Based on the targets, you will be asked to evaluate which robot archer you would trust the most.</p>
       <button onclick="_s.button()">Continue</button>
     </div>
 
     <div class="slide" id="one_slider">
-      <p>Here is one slider. For every trial in this block, you get an input to the 'present_handle' function. You can use that variable to display different prompts:</p>
+      <p>Below are the targets of two archer robots, Robot A (left) and Robot B (right), after they have each shot 15 arrows at their target.</p>
       <p class="prompt"></p>
+      <p><b>Which robot would you trust the most</b></p>
       <table id="slider_table" class="slider_table">
-        <tr><td class="left">completely disagree</td><td class="right">completely agree</td></tr>
+        <tr><td class="left">Robot A (left)</td><td class="right">Robot B (right)</td></tr>
         <tr><td colspan="2"><div id="single_slider" class="slider"></div></td></tr>
       </table>
       <button onclick="_s.button()">Continue</button>
@@ -113,14 +123,6 @@
 
     <div id="thanks" class="slide js" >
       <p  class="big">Thank you for your time!</p>
-    </div>
-
-    <div class="progress">
-      <span>Progress:</span>
-      <div class="bar-wrapper">
-        <div class="bar" width="0%">
-        </div>
-      </div>
     </div>
 
   </body>
