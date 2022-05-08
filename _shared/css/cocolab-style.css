@@ -43,12 +43,12 @@ table {
 
 #legal {
     font-size: 0.8em;
+    text-align: left;
 }
 
 /*make the subj_info slide prettier*/
 
 .subj_info_title {
-    color:#036;
     background:transparent;
     font-size:25;
     font-weight:bold;
@@ -64,7 +64,6 @@ fieldset {
 }
 
 div.long_form p {
-    color:#036;
     margin: 20px 0 0 0;
 }
 
@@ -188,4 +187,16 @@ textarea {
 
 button {
     width: auto;
+}
+
+.err {
+    color: red;
+}
+
+#instructions {
+    width: 50%;
+}
+
+#instructions p {
+    text-align: left;
 }

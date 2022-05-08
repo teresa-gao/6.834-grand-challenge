@@ -1,5 +1,5 @@
 var target_radius = 100;
-var num_comparisons = 25;
+var num_comparisons = 2; // TODO 25;
 var shots_per_target = 15;
 
 var canvas_sidelength = 2*target_radius + 50;
@@ -125,7 +125,7 @@ function make_slides(f) {
       if (exp.sliderPost == null) {
         $(".err").show();
       } else {
-        this.RT = (Date.now() - this.startTime) / 1000; // record time spent on trial
+        this.duration = (Date.now() - this.startTime) / 1000; // record time spent on trial
         this.log_responses();
 
         /* use _stream.apply(this); if and only if there is
@@ -142,12 +142,9 @@ function make_slides(f) {
 
     log_responses : function() {
       exp.data_trials.push({
-        "trial_type" : "one_slider",
         "trial_num": this.trial_num,
-        "RT": this.RT,
-        "subject": this.stim.subject,
-        "object": this.stim.object,
-        "response" : exp.sliderPost
+        "duration": this.duration,
+        "response" : exp.sliderPost - 0.5
       });
       this.trial_num++
     }
@@ -177,10 +174,7 @@ function make_slides(f) {
     start : function() {
       exp.data= {
           "trials" : exp.data_trials,
-          "system" : exp.system,
-          "condition" : exp.condition,
           "subject_information" : exp.subj_data,
-          "time_in_minutes" : (Date.now() - exp.startT)/60000
       };
       setTimeout(function() {turk.submit(exp.data);}, 1000);
     }
@@ -206,20 +200,11 @@ function init() {
 
   exp.trials = [];
   exp.condition = _.sample(["CONDITION 1", "condition 2"]); //can randomize between subject conditions here
-  exp.system = {
-      Browser : BrowserDetect.browser,
-      OS : BrowserDetect.OS,
-      screenH: screen.height,
-      screenUH: exp.height,
-      screenW: screen.width,
-      screenUW: exp.width
-    };
 
   //blocks of the experiment:
   exp.structure=[
-    // TODO: uncomment!
-    // "i0",
-    // "instructions",
+    "i0",
+    "instructions",
     "one_slider",
     "subj_info",
     "thanks"

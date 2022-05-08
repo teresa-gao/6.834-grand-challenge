@@ -121,7 +121,7 @@ turk = turk || {};
       div.style.cssFloat = "right";
       div.style.padding = "1em";
       div.style.backgroundColor = "#dfdfdf";
-      div.innerHTML = "<p><b>Debug mode</b></p>Here is the data that would have been submitted to Turk: <ul>" + htmlify(rawData) + "</ul>"
+      div.innerHTML = "<p><b>Your Results</b></p>Congratulations! Here is the data we got from you: <ul>" + htmlify(rawData) + "</ul><br><b>Please copy these output results and send them to Brandon (<a href=\"mailto://koo1104@mit.edu\">koo1104@mit.edu</a>) and/or Teresa (<a href=\"mailto://t_gao@mit.edu\">t_gao@mit.edu</a>). Thanks again for your help!</b>"
       document.body.appendChild(div);
       return;
     }
