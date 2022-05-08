@@ -1,5 +1,5 @@
 var target_radius = 100;
-var num_comparisons = 2;
+var num_comparisons = 15;
 var shots_per_target = 15;
 
 var canvas_sidelength = 2*target_radius + 50;
