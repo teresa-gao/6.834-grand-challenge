@@ -1,5 +1,5 @@
 var target_radius = 100;
-var num_comparisons = 2; // TODO 25;
+var num_comparisons = 2;
 var shots_per_target = 15;
 
 var canvas_sidelength = 2*target_radius + 50;
@@ -143,6 +143,8 @@ function make_slides(f) {
     log_responses : function() {
       exp.data_trials.push({
         "trial_num": this.trial_num,
+        "robot_a_points": this.stim["robot_a_points"],
+        "robot_b_points": this.stim["robot_b_points"],
         "duration": this.duration,
         "response" : exp.sliderPost - 0.5
       });
