@@ -2,19 +2,25 @@ var target_radius = 100;
 var num_comparisons = 25;
 var shots_per_target = 15;
 
-var target_coords = []
+var target_coords = [];
 for (let target_num = 0; target_num < num_comparisons; target_num++) {
-  let x1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
-  let x2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+  let robot_a_points = [];
+  let robot_b_points = [];
 
-  let y1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
-  let y2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+  for (let shot_num = 0; shot_num < shots_per_target; shot_num++) {
+    let x1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+    let x2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+
+    let y1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+    let y2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+
+    robot_a_points.push({"x": x1, "y": y1});
+    robot_b_points.push({"x": x2, "y": y2});
+  }
 
   target_coords.push({
-    "x1": x1,
-    "y1": y1,
-    "x2": x2,
-    "y2": y2
+    "robot_a_points": robot_a_points,
+    "robot_b_points": robot_b_points
   });
 }
 
@@ -46,11 +52,76 @@ function make_slides(f) {
 
     //this gets run only at the beginning of the block
     present_handle : function(stim) {
+      console.log(stim);
+
       $(".err").hide();
       this.stim = stim; //I like to store this information in the slide so I can record it later.
       this.startTime = Date.now();
 
-      $(".prompt").html("test: coordinates " + stim.x1 + "," + stim.x2 + "," + stim.y1 + "," + stim.y2);
+      CanvasJS.addColorSet("black", ["#000000"]);
+      let robot_a_plot = new CanvasJS.Chart("robot_a", {
+      // let options = {
+        colorSet: "black",
+        axisX: {
+          title:"",
+          minimum: -1 * target_radius - 5,
+          maximum: target_radius + 5,
+          gridThickness: 0,
+          tickThickness: 0,
+          lineThickness: 0,
+          labelFormatter: function(e) {
+            return "";
+          }
+        },
+        axisY:{
+          title: "",
+          minimum: -1 * target_radius - 5,
+          maximum: target_radius + 5,
+          gridThickness: 0,
+          tickThickness: 0,
+          lineThickness: 0,
+          labelFormatter: function(e) {
+            return "";
+          }
+        },
+        data: [{
+          type: "scatter",
+          dataPoints: stim.robot_a_points
+        }]
+      });
+      robot_a_plot.render();
+
+      let robot_b_plot = new CanvasJS.Chart("robot_b", {
+        colorSet: "black",
+        axisX: {
+          title:"",
+          minimum: -1 * target_radius - 5,
+          maximum: target_radius + 5,
+          gridThickness: 0,
+          tickThickness: 0,
+          lineThickness: 0,
+          labelFormatter: function(e) {
+            return "";
+          }
+        },
+        axisY:{
+          title: "",
+          minimum: -1 * target_radius - 5,
+          maximum: target_radius + 5,
+          gridThickness: 0,
+          tickThickness: 0,
+          lineThickness: 0,
+          labelFormatter: function(e) {
+            return "";
+          }
+        },
+        data: [{
+          type: "scatter",
+          dataPoints: stim.robot_b_points
+        }]
+      });
+      robot_b_plot.render();
+
       this.init_sliders();
       exp.sliderPost = null; //erase current slider value
     },
@@ -151,8 +222,9 @@ function init() {
 
   //blocks of the experiment:
   exp.structure=[
-    "i0",
-    "instructions",
+    // TODO: uncomment!
+    // "i0",
+    // "instructions",
     "one_slider",
     "subj_info",
     "thanks"

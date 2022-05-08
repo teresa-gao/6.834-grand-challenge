@@ -13,6 +13,10 @@ table {
 
 /*the experiment happens in "slides"*/
 .slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     /*pad the inside of the slide*/
     padding-top: 10px;
     padding-left: 20px;
@@ -82,16 +86,19 @@ textarea {
 
 
 /*align the left and right labels for the sliders properly*/
+.slider_table {
+    display: flex;
+    align-items: space-between
+}
+
 .slider_table .left {
-    display: inline;
+    /*display: inline;*/
     text-align: left;
-    float: left;
 }
 
 .slider_table .right {
-    display: inline;
+    /*display: inline;*/
     text-align: right;
-    float: right;
 }
 
 .thin {
@@ -167,4 +174,19 @@ textarea {
     height:100%;
     width:0px;
     background-color:#000000
+}
+
+#target-container {
+    display: flex;
+    width: 75%;
+    justify-content: space-between;
+}
+
+#robot_a, #robot_b {
+    width: 250px;
+    height: 250px;
+}
+
+button {
+    width: auto;
 }
