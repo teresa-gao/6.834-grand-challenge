@@ -37,8 +37,6 @@ for (let target_num = 0; target_num < num_comparisons; target_num++) {
   });
 }
 
-console.log(target_coords);
-
 function draw_target(canvas) {
   canvas.setAttribute("height", "" + canvas_sidelength);
   canvas.setAttribute("width", "" + canvas_sidelength);
