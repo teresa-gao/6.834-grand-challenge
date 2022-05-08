@@ -5,8 +5,6 @@
 
       <!--JS-->
 
-      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
       <!-- external general utilities -->
       <script src="_shared/js/jquery-1.11.1.min.js "></script>
       <script src="_shared/full-projects/jquery-ui/jquery-ui.min.js"></script>
@@ -56,11 +54,16 @@
     </div>
 
     <div class="slide" id="one_slider">
-      <p>Below are the targets of two archer robots, Robot A (left) and Robot B (right), after they have each shot 15 arrows at their target.</p>
+      <p>Below are the targets of two archer robots, Robot A (left) and Robot B (right),<br>after they have each shot 15 arrows at their target.</p>
 
       <div id="target-container">
-        <div id="robot_a"></div>
-        <div id="robot_b"></div>
+        <div id="robot_a_container">
+          <canvas id="robot_a"/>
+        </div>
+        
+        <div id="robot_b_container">
+          <canvas id="robot_b"/>
+        </div>
       </div>
 
       <p><b>Which robot would you trust the most?</b></p>

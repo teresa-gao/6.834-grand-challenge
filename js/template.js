@@ -24,6 +24,37 @@ for (let target_num = 0; target_num < num_comparisons; target_num++) {
   });
 }
 
+function draw_target(canvas) {
+  canvas.setAttribute("height", "" + (2*target_radius + 50));
+  canvas.setAttribute("width", "" + (2*target_radius + 50));
+  let canvas_2d = canvas.getContext("2d");
+  canvas_2d.beginPath();
+  // red ring
+  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius, 0, 2 * Math.PI);
+  canvas_2d.fillStyle = "red";
+  canvas_2d.fill();
+  // white ring
+  canvas_2d.beginPath();
+  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.8, 0, 2 * Math.PI);
+  canvas_2d.fillStyle = "white";
+  canvas_2d.fill();
+  // red ring
+  canvas_2d.beginPath();
+  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.6, 0, 2 * Math.PI);
+  canvas_2d.fillStyle = "red";
+  canvas_2d.fill();
+  // white ring
+  canvas_2d.beginPath();
+  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.4, 0, 2 * Math.PI);
+  canvas_2d.fillStyle = "white";
+  canvas_2d.fill();
+  // white ring
+  canvas_2d.beginPath();
+  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.2, 0, 2 * Math.PI);
+  canvas_2d.fillStyle = "red";
+  canvas_2d.fill();
+}
+
 function make_slides(f) {
   var slides = {};
 
@@ -52,75 +83,17 @@ function make_slides(f) {
 
     //this gets run only at the beginning of the block
     present_handle : function(stim) {
-      console.log(stim);
-
       $(".err").hide();
       this.stim = stim; //I like to store this information in the slide so I can record it later.
       this.startTime = Date.now();
 
-      CanvasJS.addColorSet("black", ["#000000"]);
-      let robot_a_plot = new CanvasJS.Chart("robot_a", {
-      // let options = {
-        colorSet: "black",
-        axisX: {
-          title:"",
-          minimum: -1 * target_radius - 5,
-          maximum: target_radius + 5,
-          gridThickness: 0,
-          tickThickness: 0,
-          lineThickness: 0,
-          labelFormatter: function(e) {
-            return "";
-          }
-        },
-        axisY:{
-          title: "",
-          minimum: -1 * target_radius - 5,
-          maximum: target_radius + 5,
-          gridThickness: 0,
-          tickThickness: 0,
-          lineThickness: 0,
-          labelFormatter: function(e) {
-            return "";
-          }
-        },
-        data: [{
-          type: "scatter",
-          dataPoints: stim.robot_a_points
-        }]
-      });
-      robot_a_plot.render();
+      // draw targets on #robot_a and #robot_b canvases
+      let robot_a_canvas = document.getElementById("robot_a");
+      draw_target(robot_a_canvas);
+      let robot_b_canvas = document.getElementById("robot_b");
+      draw_target(robot_b_canvas);
 
-      let robot_b_plot = new CanvasJS.Chart("robot_b", {
-        colorSet: "black",
-        axisX: {
-          title:"",
-          minimum: -1 * target_radius - 5,
-          maximum: target_radius + 5,
-          gridThickness: 0,
-          tickThickness: 0,
-          lineThickness: 0,
-          labelFormatter: function(e) {
-            return "";
-          }
-        },
-        axisY:{
-          title: "",
-          minimum: -1 * target_radius - 5,
-          maximum: target_radius + 5,
-          gridThickness: 0,
-          tickThickness: 0,
-          lineThickness: 0,
-          labelFormatter: function(e) {
-            return "";
-          }
-        },
-        data: [{
-          type: "scatter",
-          dataPoints: stim.robot_b_points
-        }]
-      });
-      robot_b_plot.render();
+      // TODO: iterate through stim.robot_a_points and stim.robot_b_points and plot them on #robot_a and #robot_b
 
       this.init_sliders();
       exp.sliderPost = null; //erase current slider value
