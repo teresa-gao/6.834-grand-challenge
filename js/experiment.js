@@ -4,13 +4,16 @@ var shots_per_target = 15;
 
 var canvas_sidelength = 2*target_radius + 50;
 
-function random_box_muller() {
-  let v = 3;
+function random_box_muller(v) {
   let r = 0;
   for (var i = v; i > 0; i --){
       r += Math.random();
   }
-  return r / v * 2 * target_radius - target_radius;
+  return r / v;
+}
+
+function random_shot() {
+  return random_box_muller(3) * 2 * target_radius - target_radius + (Math.random() - 0.5) * target_radius;
 }
 
 var target_coords = [];
@@ -19,10 +22,10 @@ for (let target_num = 0; target_num < num_comparisons; target_num++) {
   let robot_b_points = [];
 
   for (let shot_num = 0; shot_num < shots_per_target; shot_num++) {
-    let x1 = random_box_muller();
-    let x2 = random_box_muller();
-    let y1 = random_box_muller();
-    let y2 = random_box_muller();
+    let x1 = random_shot();
+    let x2 = random_shot();
+    let y1 = random_shot();
+    let y2 = random_shot();
 
     robot_a_points.push({"x": x1, "y": y1});
     robot_b_points.push({"x": x2, "y": y2});
@@ -33,6 +36,8 @@ for (let target_num = 0; target_num < num_comparisons; target_num++) {
     "robot_b_points": robot_b_points
   });
 }
+
+console.log(target_coords);
 
 function draw_target(canvas) {
   canvas.setAttribute("height", "" + canvas_sidelength);
