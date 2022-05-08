@@ -2,17 +2,27 @@ var target_radius = 100;
 var num_comparisons = 25;
 var shots_per_target = 15;
 
+var canvas_sidelength = 2*target_radius + 50;
+
+function random_box_muller() {
+  let v = 3;
+  let r = 0;
+  for (var i = v; i > 0; i --){
+      r += Math.random();
+  }
+  return r / v * 2 * target_radius - target_radius;
+}
+
 var target_coords = [];
 for (let target_num = 0; target_num < num_comparisons; target_num++) {
   let robot_a_points = [];
   let robot_b_points = [];
 
   for (let shot_num = 0; shot_num < shots_per_target; shot_num++) {
-    let x1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
-    let x2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
-
-    let y1 = Math.cos(Math.random()*Math.PI*2)*target_radius;
-    let y2 = Math.cos(Math.random()*Math.PI*2)*target_radius;
+    let x1 = random_box_muller();
+    let x2 = random_box_muller();
+    let y1 = random_box_muller();
+    let y2 = random_box_muller();
 
     robot_a_points.push({"x": x1, "y": y1});
     robot_b_points.push({"x": x2, "y": y2});
@@ -25,34 +35,47 @@ for (let target_num = 0; target_num < num_comparisons; target_num++) {
 }
 
 function draw_target(canvas) {
-  canvas.setAttribute("height", "" + (2*target_radius + 50));
-  canvas.setAttribute("width", "" + (2*target_radius + 50));
+  canvas.setAttribute("height", "" + canvas_sidelength);
+  canvas.setAttribute("width", "" + canvas_sidelength);
   let canvas_2d = canvas.getContext("2d");
   canvas_2d.beginPath();
   // red ring
-  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius, 0, 2 * Math.PI);
+  canvas_2d.arc(canvas_sidelength/2, canvas_sidelength/2, target_radius, 0, 2 * Math.PI);
   canvas_2d.fillStyle = "red";
   canvas_2d.fill();
   // white ring
   canvas_2d.beginPath();
-  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.8, 0, 2 * Math.PI);
+  canvas_2d.arc(canvas_sidelength/2, canvas_sidelength/2, target_radius*0.8, 0, 2 * Math.PI);
   canvas_2d.fillStyle = "white";
   canvas_2d.fill();
   // red ring
   canvas_2d.beginPath();
-  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.6, 0, 2 * Math.PI);
+  canvas_2d.arc(canvas_sidelength/2, canvas_sidelength/2, target_radius*0.6, 0, 2 * Math.PI);
   canvas_2d.fillStyle = "red";
   canvas_2d.fill();
   // white ring
   canvas_2d.beginPath();
-  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.4, 0, 2 * Math.PI);
+  canvas_2d.arc(canvas_sidelength/2, canvas_sidelength/2, target_radius*0.4, 0, 2 * Math.PI);
   canvas_2d.fillStyle = "white";
   canvas_2d.fill();
   // white ring
   canvas_2d.beginPath();
-  canvas_2d.arc(target_radius + 25, target_radius + 25, target_radius*0.2, 0, 2 * Math.PI);
+  canvas_2d.arc(canvas_sidelength/2, canvas_sidelength/2, target_radius*0.2, 0, 2 * Math.PI);
   canvas_2d.fillStyle = "red";
   canvas_2d.fill();
+}
+
+function plot_shots(canvas, shots) {
+  let canvas_2d = canvas.getContext("2d");
+  let origin_coord = canvas_sidelength/2; // same for x and y since canvas is square
+  for (var coords of shots) {
+    let x = coords["x"] + origin_coord;
+    let y = coords["y"] + origin_coord;
+    canvas_2d.beginPath();
+    canvas_2d.arc(x, y, 3, 0, 2 * Math.PI);
+    canvas_2d.fillStyle = "black";
+    canvas_2d.fill();
+  }
 }
 
 function make_slides(f) {
@@ -87,13 +110,12 @@ function make_slides(f) {
       this.stim = stim; //I like to store this information in the slide so I can record it later.
       this.startTime = Date.now();
 
-      // draw targets on #robot_a and #robot_b canvases
       let robot_a_canvas = document.getElementById("robot_a");
       draw_target(robot_a_canvas);
+      plot_shots(robot_a_canvas, stim["robot_a_points"])
       let robot_b_canvas = document.getElementById("robot_b");
       draw_target(robot_b_canvas);
-
-      // TODO: iterate through stim.robot_a_points and stim.robot_b_points and plot them on #robot_a and #robot_b
+      plot_shots(robot_b_canvas, stim["robot_b_points"])
 
       this.init_sliders();
       exp.sliderPost = null; //erase current slider value
